@@ -25,15 +25,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.helper.Constant;
 import com.example.myapplication.model.LoginResponse;
+import com.example.myapplication.model.UserUpdateResponse;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ChanceUserInformationFragment extends Fragment {
@@ -84,7 +89,7 @@ public class ChanceUserInformationFragment extends Fragment {
         btnEditUserProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createNewAccount();
+                updateUserInformation();
             }
         });
 
@@ -92,8 +97,7 @@ public class ChanceUserInformationFragment extends Fragment {
 
 
 
-    private void createNewAccount() {
-
+    private void updateUserInformation(){
         String email = edittxtemail.getText().toString();
         String firstname = edittxtFirstName.getText().toString();
         String surname = edittxtSurname.getText().toString();
@@ -102,67 +106,67 @@ public class ChanceUserInformationFragment extends Fragment {
         String userId = manager.getSharedPreference(getContext(),"Id","");
         String token = manager.getSharedPreference(getContext(),"token","");
 
-            try {
-                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        try {
 
-                String URL = Constant.url+"/api/user/update/"+userId;
-                JSONObject jsonBody = new JSONObject();
-                if (!username.isEmpty()){jsonBody.put("userName", username);}
-                if (!email.isEmpty()){jsonBody.put("email",email);}
-                if (!surname.isEmpty()){jsonBody.put("surName",surname);}
-                if (!password.isEmpty()){jsonBody.put("password",password);}
-                if (!firstname.isEmpty()){jsonBody.put("firstName",firstname);}
 
-                final String requestBody = jsonBody.toString();
 
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("VOLLEY", response);
-                        Toast.makeText(getContext(), "Your account has been successfully updeted", Toast.LENGTH_SHORT).show();
-                        manager.clearSharedPreference(getContext());
-                        Intent UserInformationFragmentIntent = new Intent(getContext(),MainActivity.class);
-                        startActivity(UserInformationFragmentIntent);
+            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            String URL = Constant.url+"/api/user/update/"+userId;
+            JSONObject jsonBody = new JSONObject();
+            if (!username.isEmpty()){jsonBody.put("userName", username);}
+            if (!email.isEmpty()){jsonBody.put("email",email);}
+            if (!surname.isEmpty()){jsonBody.put("surName",surname);}
+            if (!password.isEmpty()){jsonBody.put("password",password);}
+            if (!firstname.isEmpty()){jsonBody.put("firstName",firstname);}
 
+            JsonObjectRequest regueest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Toast.makeText(getContext(), "Your account has been successfully updeted", Toast.LENGTH_SHORT).show();
+                    manager.clearSharedPreference(getContext());
+                    Gson gson = new Gson();
+                    String c = response.toString();
+                    UserUpdateResponse userUpdateResponse = gson.fromJson(c, UserUpdateResponse.class);
+                    manager.setSharedPreference(getContext(),"firstName",userUpdateResponse.getUser().getFirstName());
+                    manager.setSharedPreference(getContext(),"surName",userUpdateResponse.getUser().getSurName());
+                    manager.setSharedPreference(getContext(),"email",userUpdateResponse.getUser().getEmail());
+                    manager.setSharedPreference(getContext(),"userName",userUpdateResponse.getUser().getUserName());
+                    manager.setSharedPreference(getContext(),"Id",userUpdateResponse.getUser().getId().toString());
+                    Intent UserInformationFragmentIntent = new Intent(getContext(),MainActivity.class);
+                    startActivity(UserInformationFragmentIntent);
+                    try {
+                        manager.setSharedPreference(getContext(),"token",response.getString("token"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("VOLLEY", error.toString());
-                        Toast.makeText(getContext(), "Your account could not be updated", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8";
-                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Please try again", Toast.LENGTH_SHORT).show();
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("token",token);
+                    return headers;
+                }
+            };
 
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-                        try {
-                            return requestBody == null ? null : requestBody.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                            return null;
-                        }
-                    }
 
-                    @Override
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        String responseString = "";
-                        if (response != null) {
-                            responseString = String.valueOf(response.statusCode);
-                            // can get more details such as response.headers
-                        }
-                        return  Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                };
-                requestQueue.add(stringRequest);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
+            requestQueue.add(regueest);
         }
+
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+
 
 
 
