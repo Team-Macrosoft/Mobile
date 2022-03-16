@@ -107,9 +107,6 @@ public class ChanceUserInformationFragment extends Fragment {
         String token = manager.getSharedPreference(getContext(),"token","");
 
         try {
-
-
-
             RequestQueue requestQueue = Volley.newRequestQueue(getContext());
             String URL = Constant.url+"/api/user/update/"+userId;
             JSONObject jsonBody = new JSONObject();
@@ -123,7 +120,9 @@ public class ChanceUserInformationFragment extends Fragment {
                 @Override
                 public void onResponse(JSONObject response) {
                     Toast.makeText(getContext(), "Your account has been successfully updeted", Toast.LENGTH_SHORT).show();
+                    String token = manager.getSharedPreference(getContext(),"token","");
                     manager.clearSharedPreference(getContext());
+                    manager.setSharedPreference(getContext(),"token",token);
                     Gson gson = new Gson();
                     String c = response.toString();
                     UserUpdateResponse userUpdateResponse = gson.fromJson(c, UserUpdateResponse.class);
@@ -132,13 +131,8 @@ public class ChanceUserInformationFragment extends Fragment {
                     manager.setSharedPreference(getContext(),"email",userUpdateResponse.getUser().getEmail());
                     manager.setSharedPreference(getContext(),"userName",userUpdateResponse.getUser().getUserName());
                     manager.setSharedPreference(getContext(),"Id",userUpdateResponse.getUser().getId().toString());
-                    Intent UserInformationFragmentIntent = new Intent(getContext(),MainActivity.class);
+                    Intent UserInformationFragmentIntent = new Intent(getContext(),UserProfileActivity.class);
                     startActivity(UserInformationFragmentIntent);
-                    try {
-                        manager.setSharedPreference(getContext(),"token",response.getString("token"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -149,7 +143,7 @@ public class ChanceUserInformationFragment extends Fragment {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("token",token);
+                    headers.put("Authorization",token);
                     return headers;
                 }
             };
@@ -162,10 +156,7 @@ public class ChanceUserInformationFragment extends Fragment {
             e.printStackTrace();
         }
 
-
-
     }
-
 
 
 

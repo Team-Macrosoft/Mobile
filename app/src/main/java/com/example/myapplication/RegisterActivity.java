@@ -21,9 +21,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.helper.Constant;
+import com.example.myapplication.model.LoginResponse;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,83 +63,50 @@ public class RegisterActivity extends AppCompatActivity {
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createNewAccount();
+                createNewAccount2();
             }
         });
     }
 
-    private void createNewAccount() {
-
+    public void createNewAccount2(){try {
         String username = txtusername.getText().toString();
         String password = txtpasswoord.getText().toString();
         String email = txtemail.getText().toString();
         String firstname = txtFirstname.getText().toString();
         String surname = txtSurname.getText().toString();
+        RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
+        String URL = Constant.url + "/api/auth/register";
+        JSONObject jsonBody = new JSONObject();
+        jsonBody.put("userName", username);
+        jsonBody.put("email",email);
+        jsonBody.put("password", password);
+        jsonBody.put("surName",surname);
+        jsonBody.put("firstName",firstname);
+        jsonBody.put("role","ROLE_MEMBER");
 
-        if (TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_LONG).show();
-        }else if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
-        }else {
-            try {
-                RequestQueue requestQueue = Volley.newRequestQueue(RegisterActivity.this);
-                String URL = Constant.url + "/api/auth/register";
-                JSONObject jsonBody = new JSONObject();
-                jsonBody.put("userName", username);
-                jsonBody.put("email",email);
-                jsonBody.put("password", password);
-                jsonBody.put("surName",surname);
-                jsonBody.put("firstName",firstname);
+        JsonObjectRequest regueest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("response", response.toString());
+                Toast.makeText(RegisterActivity.this, "Your account has been successfully created", Toast.LENGTH_SHORT).show();
+                Intent loginIntent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(loginIntent);
+                finish();
 
-                final String requestBody = jsonBody.toString();
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("VOLLEY", response);
-                        Toast.makeText(RegisterActivity.this, "Your account has been successfully created", Toast.LENGTH_SHORT).show();
-                        Intent loginIntent = new Intent(RegisterActivity.this,LoginActivity.class);
-                        startActivity(loginIntent);
-                        finish();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("VOLLEY", error.toString());
-                        Toast.makeText(RegisterActivity.this, "Your account could not be created", Toast.LENGTH_SHORT).show();
-                    }
-                }) {
-                    @Override
-                    public String getBodyContentType() {
-                        return "application/json; charset=utf-8";
-                    }
-
-                    @Override
-                    public byte[] getBody() throws AuthFailureError {
-                        try {
-                            return requestBody == null ? null : requestBody.getBytes("utf-8");
-                        } catch (UnsupportedEncodingException uee) {
-                            VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                            return null;
-                        }
-                    }
-
-                    @Override
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        String responseString = "";
-                        if (response != null) {
-                            responseString = String.valueOf(response.statusCode);
-                            // can get more details such as response.headers
-                        }
-                        return  Response.success(responseString,HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                };
-                requestQueue.add(stringRequest);
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RegisterActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-        }
 
+        requestQueue.add(regueest);
     }
+
+    catch (JSONException e) {
+        e.printStackTrace();
+    }}
+
 }
