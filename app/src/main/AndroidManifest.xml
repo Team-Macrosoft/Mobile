@@ -20,6 +20,16 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
+            android:parentActivityName=".ChooseTimeActivity"/>
+        <activity
+            android:name=".ChooseTimeActivity"
+            android:exported="false"
+
+            />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+
             />
         <activity
             android:name=".LoginActivity"

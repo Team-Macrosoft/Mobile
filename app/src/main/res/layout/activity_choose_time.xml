@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <DatePicker
+        android:id="@+id/datePicker1"
+        android:layout_width="413dp"
+        android:layout_height="214dp"
+        android:layout_marginTop="4dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <NumberPicker
+        android:id="@+id/startNumberPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnReserve"
+        app:layout_constraintEnd_toStartOf="@+id/endNumberPicker"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <NumberPicker
+        android:id="@+id/endNumberPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnReserve"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnReserve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_toLeftOf="@+id/startNumberPicker"
+        android:text="Reserve"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+
+    <TextView
+        android:id="@+id/textEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="124dp"
+        android:text="End Time"
+        app:layout_constraintBottom_toTopOf="@+id/endNumberPicker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datePicker1"
+        app:layout_constraintVertical_bias="0.948" />
+
+    <TextView
+        android:id="@+id/textStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Time"
+        app:layout_constraintBottom_toTopOf="@+id/startNumberPicker"
+        app:layout_constraintEnd_toStartOf="@+id/textEnd"
+        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/datePicker1"
+        app:layout_constraintVertical_bias="0.955" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

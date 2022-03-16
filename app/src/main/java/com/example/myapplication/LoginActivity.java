@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         btnApply  = (Button) findViewById(R.id.btnLoginApply);
         String token=  manager.getSharedPreference(getApplicationContext(),"token","");
         if(token!=null && !token.isEmpty()){
-            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(mainIntent);
             finish();
         }
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             manager.setSharedPreference(getApplicationContext(),"token",response.getString("token"));
                             Toast.makeText(LoginActivity.this, "You have successfully logged into your account", Toast.LENGTH_LONG).show();
-                            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(mainIntent);
                             finish();
                         } catch (JSONException e) {
