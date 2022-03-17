@@ -19,8 +19,8 @@ public class WelcomeActivity extends AppCompatActivity {
         String token=  manager.getSharedPreference(getApplicationContext(),"token","");
 
         if(token!=null && !token.isEmpty()){
-            Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
-            startActivity(mainIntent);
+            Intent homeIntent = new Intent(WelcomeActivity.this, HomeActivity.class);
+            startActivity(homeIntent);
             finish();
         }
     }

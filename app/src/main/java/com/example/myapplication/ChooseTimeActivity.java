@@ -39,6 +39,7 @@ public class ChooseTimeActivity extends AppCompatActivity {
     DatePicker datePicker;
     Button btnReserve;
 
+
     public void init() {
         startNumberPicker = findViewById(R.id.startNumberPicker);
         startNumberPicker.setFormatter(new NumberPicker.Formatter() {
@@ -68,22 +69,24 @@ public class ChooseTimeActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_time);
         init();
         btnReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
-                    getStartTime();
-                    getEndTime();
-                    postTimeAndGetSlotList();
+                    Intent mainIntent = new Intent(ChooseTimeActivity.this, MainActivity.class);
+                    mainIntent.putExtra("StartTime",getStartTime());
+                    mainIntent.putExtra("EndTime",getEndTime());
+                    startActivity(mainIntent);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         });
-
 
 
     }
@@ -112,7 +115,7 @@ public class ChooseTimeActivity extends AppCompatActivity {
 
     }
 
-    private Date getEndTime() throws ParseException {
+    private String getEndTime() throws ParseException {
 
 
 
@@ -132,67 +135,9 @@ public class ChooseTimeActivity extends AppCompatActivity {
                 +stringMinute+":"+stringSecond;
 
 
-        Date date1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(sDate);
-
-        Log.i("Time", String.valueOf(date1));
-
-        return date1;
+        Log.i("Time", sDate);
+        return sDate;
 
     }
 
-    private void postTimeAndGetSlotList() {
-
-        ArrayList<String> parkingSlotStringList = new ArrayList<>();
-        RequestQueue requestQueue = Volley.newRequestQueue(ChooseTimeActivity.this);
-        String URL = Constant.url +"/api/reservations/getavaiable";
-
-        try {
-
-            JSONObject jsonBody = new JSONObject();
-            jsonBody.put("userId", 1);
-            jsonBody.put("parkingSpotId", 1);
-            jsonBody.put("startDate", getStartTime() );
-            jsonBody.put("endDate", getStartTime());
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL,jsonBody ,new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.i("VOLLEY", response.toString());
-                    try {
-                        ParkingSlotResponse parkingSlotResponse = ParkingSlotResponse.convertFromJSONToMyClass(response);
-                        ArrayList<ParkingSpot> parkingSpotList = parkingSlotResponse.getParkingSlotList();
-
-
-                        for (ParkingSpot parkingSlot : parkingSpotList) {
-                            String parkingSpotString = "";
-                            parkingSpotString += "parking spot " + parkingSlot.getId() + " : " + "price: " + parkingSlot.getPrice();
-                            parkingSlotStringList.add(parkingSpotString);
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    Intent mainIntent = new Intent(ChooseTimeActivity.this, MainActivity.class);
-                    startActivity(mainIntent);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
-            };
-
-            requestQueue.add(jsonObjectRequest);
-
-        } catch (JSONException | ParseException e) {
-            e.printStackTrace();
-        }
-    }
 }

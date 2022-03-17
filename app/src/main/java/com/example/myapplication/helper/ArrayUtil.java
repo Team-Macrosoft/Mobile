@@ -5,6 +5,9 @@ import com.example.myapplication.model.Reservation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,19 +28,6 @@ public class ArrayUtil
         return list;
     }
 
-    public static ArrayList<Reservation> convertReservation(JSONArray jArr)
-    {
-        ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-        try {
-            for (int i=0, l=jArr.length(); i<l; i++){
-                Reservation reservation = Reservation.convertFromJSONToMyClass((JSONObject) jArr.get(i));
-
-                reservations.add(reservation);
-            }
-        } catch (JSONException e) {}
-
-        return reservations;
-    }
 
 
     public static JSONArray convertParkingSpot(Collection<Object> list)

@@ -22,6 +22,11 @@
             android:exported="false"
             android:parentActivityName=".ChooseTimeActivity"/>
         <activity
+            android:name=".BillActivity"
+            android:exported="false"
+
+            />
+        <activity
             android:name=".ChooseTimeActivity"
             android:exported="false"
 
