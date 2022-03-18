@@ -3,13 +3,17 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,7 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MyReservationActivity extends AppCompatActivity {
-    Button btnBackToReservation;
+
 
     private LocalDataManager manager = LocalDataManager.getInstance();
     @Override
@@ -40,18 +44,8 @@ public class MyReservationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservation);
         init();
-
-        btnBackToReservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent billIntent = new Intent(MyReservationActivity.this,ChooseTimeActivity.class);
-                startActivity(billIntent);
-            }
-        });
     }
     public void init() {
-
-        btnBackToReservation = findViewById(R.id.btnBackToReservation);
         RequestQueue requestQueue = Volley.newRequestQueue(MyReservationActivity.this);
 
         ArrayList<String> reservationStringList = new ArrayList<>();
@@ -114,19 +108,6 @@ public class MyReservationActivity extends AppCompatActivity {
                     ListView listView = (ListView) findViewById(R.id.myReservationList);
                     listView.setAdapter(adapter);
 
-                }else{
-                    Map<String, String> datum = new HashMap<String, String>(2);
-                    datum.put("First Line", "No reservation found");
-                    datum.put("Second Line", "Please return to reservation page");
-                    data.add(datum);
-
-                    SimpleAdapter adapter = new SimpleAdapter(MyReservationActivity.this, data,
-                            android.R.layout.simple_list_item_2,
-                            new String[]{"First Line", "Second Line"},
-                            new int[]{android.R.id.text1, android.R.id.text2});
-
-                    ListView listView = (ListView) findViewById(R.id.myReservationList);
-                    listView.setAdapter(adapter);
                 }
 
             }

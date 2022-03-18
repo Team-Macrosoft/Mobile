@@ -3,11 +3,15 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,15 +31,21 @@ import java.util.Map;
 
 public class BillActivity extends AppCompatActivity {
 
-   TextView txtStartDate;
-   TextView txtEndDate;
-   TextView txtTotalCost;
-
-    Button btnGoToHome;
+  private TextView txtStartDate;
+  private TextView txtEndDate;
+  private TextView txtTotalCost;
+  private Button btnGoToHome;
+  private Toolbar actionbarMain;
 
     private LocalDataManager manager = LocalDataManager.getInstance();
 
     public void init() {
+        actionbarMain = (Toolbar) findViewById(R.id.actionbarMain);
+        setSupportActionBar(actionbarMain);
+        getSupportActionBar().setTitle("Bill Detail");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         RequestQueue requestQueue = Volley.newRequestQueue(BillActivity.this);
 
         btnGoToHome = findViewById(R.id.btnGoToHome);
@@ -106,4 +116,39 @@ public class BillActivity extends AppCompatActivity {
         }
     });
 }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item,menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.reservationHomeOptionMenu:
+                Intent HomeIntent = new Intent(BillActivity.this, HomeActivity.class);
+                startActivity(HomeIntent);
+                return true;
+            case R.id.reservationInfoOptionMenu:
+                Intent userProfile = new Intent(BillActivity.this, UserProfileActivity.class);
+                startActivity(userProfile);
+                return true;
+            case R.id.optionMenuLogout:
+                manager.clearSharedPreference(getApplicationContext());
+                String token=  manager.getSharedPreference(getApplicationContext(),"token","");
+                if(token==null || token.isEmpty()){
+                    Intent welcomeIntent = new Intent(BillActivity.this, WelcomeActivity.class);
+                    startActivity(welcomeIntent);
+                    finish();
+                }
+                Toast.makeText(getApplicationContext(),R.string.userProfileActivityonOptionsItemSelected,Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

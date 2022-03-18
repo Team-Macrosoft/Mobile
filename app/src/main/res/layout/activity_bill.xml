@@ -5,81 +5,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/actionbarMain"
+        layout="@layout/actionbar_app" />
+
     <TextView
         android:id="@+id/textStartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:textSize="20sp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textEndDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.626"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
+        app:layout_constraintBottom_toBottomOf="@+id/textLabelStartDate"
+        app:layout_constraintStart_toEndOf="@+id/textLabelStartDate"
+        app:layout_constraintTop_toTopOf="@+id/textLabelStartDate"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="132dp"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textTotalCost"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.626"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textLabelTotalCost"
+        app:layout_constraintStart_toEndOf="@+id/textLabelTotalCost"
+        app:layout_constraintTop_toTopOf="@+id/textLabelTotalCost"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textTotalCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
         android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.713"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="437dp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textLabelEndDate"
+        app:layout_constraintStart_toEndOf="@+id/textLabelEndDate"
+        app:layout_constraintTop_toTopOf="@+id/textLabelEndDate"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnGoToHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.837" />
+        android:layout_marginTop="48dp"
+        android:text="@string/button_go_home"
+        app:layout_constraintEnd_toEndOf="@+id/textTotalCost"
+        app:layout_constraintStart_toStartOf="@+id/textLabelEndDate"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelEndDate" />
 
     <TextView
         android:id="@+id/textLabelStartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Date:"
-        app:layout_constraintBottom_toTopOf="@+id/textLabelEndDate"
-        app:layout_constraintEnd_toStartOf="@+id/textStartDate"
-        app:layout_constraintHorizontal_bias="0.395"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="80dp"
+        android:textSize="20sp"
+        android:text="@string/start_date"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.339" />
+        app:layout_constraintTop_toBottomOf="@+id/actionbarMain"
+        app:layout_constraintVertical_bias="0.003" />
 
     <TextView
         android:id="@+id/textLabelEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="End Date:"
-        app:layout_constraintEnd_toStartOf="@+id/textTotalCost"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="437dp" />
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:textSize="20sp"
+        android:text="@string/end_date"
+        app:layout_constraintEnd_toEndOf="@+id/textLabelTotalCost"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textLabelTotalCost"
+        app:layout_constraintTop_toBottomOf="@+id/textLabelTotalCost" />
 
     <TextView
         android:id="@+id/textLabelTotalCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        android:text="Total Cost"
-        app:layout_constraintEnd_toStartOf="@+id/textTotalCost"
-        app:layout_constraintHorizontal_bias="0.324"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:textSize="20sp"
+        android:text="@string/total_cost"
+        app:layout_constraintEnd_toEndOf="@+id/textLabelStartDate"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textLabelStartDate"
         app:layout_constraintTop_toBottomOf="@+id/textLabelStartDate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

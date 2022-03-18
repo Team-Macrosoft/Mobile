@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 if(token==null || token.isEmpty()){
                     Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
                     startActivity(welcomeIntent);
-                   finish();
+                    finish();
                 }
                 Toast.makeText(getApplicationContext(),R.string.userProfileActivityonOptionsItemSelected,Toast.LENGTH_SHORT).show();
                 return true;

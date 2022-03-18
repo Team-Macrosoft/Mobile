@@ -49,4 +49,5 @@
     <string name="login_username">Gebruikersnaam</string>
     <string name="login_password">Wachtwoord</string>
     <string name="user_inf_username">Gebruikersnaam</string>
+    <string name="reservationOptionMenu">Reservaties</string>
 </resources>
