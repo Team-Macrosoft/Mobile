@@ -18,23 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.myapplication.helper.Constant;
-import com.example.myapplication.model.ParkingSpot;
-import com.example.myapplication.model.ParkingSlotResponse;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class ChooseTimeActivity extends AppCompatActivity {
 
@@ -173,15 +157,15 @@ public class ChooseTimeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.reservationHomeOptionMenu:
+            case R.id.homeOptionMenu:
                 Intent HomeIntent = new Intent(ChooseTimeActivity.this, HomeActivity.class);
                 startActivity(HomeIntent);
                 return true;
-            case R.id.reservationReservationOptionMenu:
-                Intent MainIntent = new Intent(ChooseTimeActivity.this, MainActivity.class);
-                startActivity(MainIntent);
+            case R.id.myReservationsOptionMenu:
+                Intent myReservationsIntent = new Intent(ChooseTimeActivity.this, MyReservationsActivity.class);
+                startActivity(myReservationsIntent);
                 return true;
-            case R.id.reservationInfoOptionMenu:
+            case R.id.userInfoOptionMenu:
                 Intent userProfile = new Intent(ChooseTimeActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
                 finish();

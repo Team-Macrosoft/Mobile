@@ -82,9 +82,9 @@ public class RegisterActivity extends AppCompatActivity {
         jsonBody.put("password", password);
         jsonBody.put("surName",surname);
         jsonBody.put("firstName",firstname);
-        jsonBody.put("role","ROLE_ADMIN");
+        jsonBody.put("role","ROLE_MEMBER");
 
-        JsonObjectRequest regueest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("response", response.toString());
@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-        requestQueue.add(regueest);
+        requestQueue.add(request);
     }
 
     catch (JSONException e) {

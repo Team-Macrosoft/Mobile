@@ -6,17 +6,17 @@
         android:title="">
         <menu>
             <item
-                android:id="@+id/reservationHomeOptionMenu"
+                android:id="@+id/homeOptionMenu"
                 android:icon="@drawable/ic_baseline_home_24"
                 android:title="@string/my_Home"
                 app:showAsAction="never"/>
             <item
-                android:id="@+id/reservationReservationOptionMenu"
+                android:id="@+id/myReservationsOptionMenu"
                 android:icon="@drawable/ic_baseline_bookmark_24"
                 android:title="@string/reservationOptionMenu"
                 app:showAsAction="never"/>
             <item
-                android:id="@+id/reservationInfoOptionMenu"
+                android:id="@+id/userInfoOptionMenu"
                 android:icon="@drawable/ic_baseline_person_24"
                 android:title="@string/my_profile"
                 app:showAsAction="never"/>

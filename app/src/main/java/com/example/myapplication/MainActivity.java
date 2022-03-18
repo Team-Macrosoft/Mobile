@@ -2,9 +2,6 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +27,6 @@ import com.example.myapplication.helper.Constant;
 import com.example.myapplication.model.ParkingSlotResponse;
 import com.example.myapplication.model.ParkingSpot;
 import com.example.myapplication.model.ReservationResponse;
-import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -65,9 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-
-            String startTime = getIntent().getExtras().getString("StartTime", "");
+            String startTime =   getIntent().getExtras().getString("StartTime", "");
             String endTime = getIntent().getExtras().getString("EndTime", "");
+
+//            if (getIntent().getExtras() != null){
+//                getIntent().getExtras().getString("StartTime", "");
+//                endTime = getIntent().getExtras().getString("EndTime", "");
+//            }
+
 
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("startDate", startTime);
@@ -227,11 +228,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.reservationHomeOptionMenu:
+            case R.id.homeOptionMenu:
                 Intent HomeIntent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(HomeIntent);
                 return true;
-            case R.id.reservationInfoOptionMenu:
+            case R.id.myReservationsOptionMenu:
+                Intent MainIntent = new Intent(MainActivity.this, MyReservationsActivity.class);
+                startActivity(MainIntent);
+                return true;
+            case R.id.userInfoOptionMenu:
                 Intent userProfile = new Intent(MainActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
                 return true;

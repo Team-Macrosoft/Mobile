@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
@@ -27,7 +26,6 @@ public class UserProfileActivity extends AppCompatActivity {
         actionbarUserProfile = (Toolbar) findViewById(R.id.actionbarUserProfile);
         setSupportActionBar(actionbarUserProfile);
         getSupportActionBar().setTitle(R.string.userProfileActivityInitSetTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tabLayout = (TabLayout) findViewById(R.id.UserProfileTabLayOut);
         viewPager = (ViewPager) findViewById(R.id.userProfileViewPager);
@@ -60,15 +58,15 @@ public class UserProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.reservationHomeOptionMenu:
+            case R.id.homeOptionMenu:
                 Intent HomeIntent = new Intent(UserProfileActivity.this, HomeActivity.class);
                 startActivity(HomeIntent);
                 return true;
-            case R.id.reservationReservationOptionMenu:
-                    Intent MainIntent = new Intent(UserProfileActivity.this, MyReservationActivity.class);
+            case R.id.myReservationsOptionMenu:
+                    Intent MainIntent = new Intent(UserProfileActivity.this, MyReservationsActivity.class);
                     startActivity(MainIntent);
                 return true;
-            case R.id.reservationInfoOptionMenu:
+            case R.id.userInfoOptionMenu:
                 Intent userProfile = new Intent(UserProfileActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
                 finish();

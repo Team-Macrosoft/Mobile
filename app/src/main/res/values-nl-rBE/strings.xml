@@ -57,4 +57,7 @@
     <string name="billActivitySetTitle">Factuurdetails</string>
     <string name="myReservationActivitySetTitle">Mijn Reservatie</string>
     <string name="btnRefresh">Pagina verversen</string>
+    <string name="btnChooseTime">ZIE BESCHIKBARE PLAATSEN</string>
+    <string name="end_time">Eindtijd</string>
+    <string name="start_time">Starttijd</string>
 </resources>

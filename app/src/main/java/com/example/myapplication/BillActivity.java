@@ -129,11 +129,15 @@ public class BillActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.reservationHomeOptionMenu:
+            case R.id.homeOptionMenu:
                 Intent HomeIntent = new Intent(BillActivity.this, HomeActivity.class);
                 startActivity(HomeIntent);
                 return true;
-            case R.id.reservationInfoOptionMenu:
+            case R.id.myReservationsOptionMenu:
+                Intent myReservationsIntent = new Intent(BillActivity.this, MyReservationsActivity.class);
+                startActivity(myReservationsIntent);
+                return true;
+            case R.id.userInfoOptionMenu:
                 Intent userProfile = new Intent(BillActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
                 return true;

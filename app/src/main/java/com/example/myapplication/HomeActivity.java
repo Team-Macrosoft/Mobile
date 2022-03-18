@@ -6,14 +6,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import java.text.ParseException;
 
 public class HomeActivity extends AppCompatActivity {
     private Button btnGoToReservation;
@@ -64,11 +61,11 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.reservationReservationOptionMenu:
-                Intent MainIntent = new Intent(HomeActivity.this, MyReservationActivity.class);
+            case R.id.myReservationsOptionMenu:
+                Intent MainIntent = new Intent(HomeActivity.this, MyReservationsActivity.class);
                 startActivity(MainIntent);
                 return true;
-            case R.id.reservationInfoOptionMenu:
+            case R.id.userInfoOptionMenu:
                 Intent userProfile = new Intent(HomeActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
                 finish();

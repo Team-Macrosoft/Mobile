@@ -2,14 +2,12 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +23,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.myapplication.helper.Constant;
 import com.example.myapplication.model.MemberReservationListResponse;
 import com.example.myapplication.model.Reservation;
-import com.example.myapplication.model.ReservationResponse;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -35,19 +32,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MyReservationActivity extends AppCompatActivity {
+public class MyReservationsActivity extends AppCompatActivity {
     Button btnBackToReservation;
     private Toolbar actionbarMyReservation;
     private LocalDataManager manager = LocalDataManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_reservation);
+        setContentView(R.layout.activity_my_reservations);
         init();
         btnBackToReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent billIntent = new Intent(MyReservationActivity.this,ChooseTimeActivity.class);
+                Intent billIntent = new Intent(MyReservationsActivity.this,ChooseTimeActivity.class);
                 startActivity(billIntent);
             }
         });
@@ -61,7 +58,7 @@ public class MyReservationActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.myReservationActivitySetTitle);
 
 
-        RequestQueue requestQueue = Volley.newRequestQueue(MyReservationActivity.this);
+        RequestQueue requestQueue = Volley.newRequestQueue(MyReservationsActivity.this);
 
         ArrayList<String> reservationStringList = new ArrayList<>();
 
@@ -115,7 +112,7 @@ public class MyReservationActivity extends AppCompatActivity {
 
                     }
 
-                    SimpleAdapter adapter = new SimpleAdapter(MyReservationActivity.this, data,
+                    SimpleAdapter adapter = new SimpleAdapter(MyReservationsActivity.this, data,
                             android.R.layout.simple_list_item_2,
                             new String[]{"First Line", "Second Line"},
                             new int[]{android.R.id.text1, android.R.id.text2});
@@ -134,7 +131,7 @@ public class MyReservationActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = manager.getSharedPreference(MyReservationActivity.this, "token", "");
+                String token = manager.getSharedPreference(MyReservationsActivity.this, "token", "");
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Authorization", token);
                 return params;
@@ -155,13 +152,13 @@ public class MyReservationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
-            case R.id.reservationHomeOptionMenu:
-                Intent MainIntent = new Intent(MyReservationActivity.this, HomeActivity.class);
+            case R.id.homeOptionMenu:
+                Intent MainIntent = new Intent(MyReservationsActivity.this, HomeActivity.class);
 
                 startActivity(MainIntent);
                 return true;
-            case R.id.reservationInfoOptionMenu:
-                Intent userProfile = new Intent(MyReservationActivity.this, UserProfileActivity.class);
+            case R.id.userInfoOptionMenu:
+                Intent userProfile = new Intent(MyReservationsActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
                 finish();
                 return true;
@@ -169,7 +166,7 @@ public class MyReservationActivity extends AppCompatActivity {
                 manager.clearSharedPreference(getApplicationContext());
                 String token =  manager.getSharedPreference(getApplicationContext(),"token","");
                 if(token==null || token.isEmpty()){
-                    Intent welcomeIntent = new Intent(MyReservationActivity.this, WelcomeActivity.class);
+                    Intent welcomeIntent = new Intent(MyReservationsActivity.this, WelcomeActivity.class);
                     startActivity(welcomeIntent);
                     finish();
                 }
