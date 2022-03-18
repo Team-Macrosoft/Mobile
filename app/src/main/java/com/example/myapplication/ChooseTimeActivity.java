@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,9 +42,18 @@ public class ChooseTimeActivity extends AppCompatActivity {
     NumberPicker endNumberPicker;
     DatePicker datePicker;
     Button btnReserve;
+    private LocalDataManager manager = LocalDataManager.getInstance();
+    private Toolbar actionbarChooseTime;
 
 
     public void init() {
+
+        actionbarChooseTime = (Toolbar) findViewById(R.id.actionbarMain);
+        setSupportActionBar(actionbarChooseTime);
+        getSupportActionBar().setTitle(R.string.chooseTimeActivitySetTitle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         startNumberPicker = findViewById(R.id.startNumberPicker);
         startNumberPicker.setFormatter(new NumberPicker.Formatter() {
             @Override
@@ -82,6 +95,7 @@ public class ChooseTimeActivity extends AppCompatActivity {
                     mainIntent.putExtra("StartTime",getStartTime());
                     mainIntent.putExtra("EndTime",getEndTime());
                     startActivity(mainIntent);
+                    finish();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -138,6 +152,47 @@ public class ChooseTimeActivity extends AppCompatActivity {
         Log.i("Time", sDate);
         return sDate;
 
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item,menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.reservationHomeOptionMenu:
+                Intent HomeIntent = new Intent(ChooseTimeActivity.this, HomeActivity.class);
+                startActivity(HomeIntent);
+                return true;
+            case R.id.reservationReservationOptionMenu:
+                Intent MainIntent = new Intent(ChooseTimeActivity.this, MainActivity.class);
+                startActivity(MainIntent);
+                return true;
+            case R.id.reservationInfoOptionMenu:
+                Intent userProfile = new Intent(ChooseTimeActivity.this, UserProfileActivity.class);
+                startActivity(userProfile);
+                finish();
+                return true;
+            case R.id.optionMenuLogout:
+                manager.clearSharedPreference(getApplicationContext());
+                String token =  manager.getSharedPreference(getApplicationContext(),"token","");
+                if(token==null || token.isEmpty()){
+                    Intent welcomeIntent = new Intent(ChooseTimeActivity.this, WelcomeActivity.class);
+                    startActivity(welcomeIntent);
+                    finish();
+                }
+                Toast.makeText(getApplicationContext(),R.string.userProfileActivityonOptionsItemSelected,Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

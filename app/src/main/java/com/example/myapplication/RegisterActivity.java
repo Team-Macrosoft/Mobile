@@ -63,12 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createNewAccount2();
+                createNewAccount();
             }
         });
     }
 
-    public void createNewAccount2(){try {
+    public void createNewAccount(){try {
         String username = txtusername.getText().toString();
         String password = txtpasswoord.getText().toString();
         String email = txtemail.getText().toString();
@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.i("response", response.toString());
-                Toast.makeText(RegisterActivity.this, "Your account has been successfully created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, R.string.registerActivityonResponse, Toast.LENGTH_SHORT).show();
                 Intent loginIntent = new Intent(RegisterActivity.this,LoginActivity.class);
                 startActivity(loginIntent);
                 finish();
@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, R.string.registerActivityonErrorResponse, Toast.LENGTH_SHORT).show();
             }
         });
 

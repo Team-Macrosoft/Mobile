@@ -119,7 +119,7 @@ public class ChanceUserInformationFragment extends Fragment {
             JsonObjectRequest regueest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    Toast.makeText(getContext(), "Your account has been successfully updeted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.changeInformationActivityOnResponse, Toast.LENGTH_SHORT).show();
                     String token = manager.getSharedPreference(getContext(),"token","");
                     manager.clearSharedPreference(getContext());
                     manager.setSharedPreference(getContext(),"token",token);
@@ -131,13 +131,13 @@ public class ChanceUserInformationFragment extends Fragment {
                     manager.setSharedPreference(getContext(),"email",userUpdateResponse.getUser().getEmail());
                     manager.setSharedPreference(getContext(),"userName",userUpdateResponse.getUser().getUserName());
                     manager.setSharedPreference(getContext(),"Id",userUpdateResponse.getUser().getId().toString());
-                    Intent UserInformationFragmentIntent = new Intent(getContext(),UserProfileActivity.class);
+                    Intent UserInformationFragmentIntent = new Intent(getContext(),HomeActivity.class);
                     startActivity(UserInformationFragmentIntent);
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(), "Please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.registerActivityonErrorResponse, Toast.LENGTH_SHORT).show();
                 }
             }){
                 @Override

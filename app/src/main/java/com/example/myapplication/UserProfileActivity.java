@@ -26,7 +26,7 @@ public class UserProfileActivity extends AppCompatActivity {
     public void init(){
         actionbarUserProfile = (Toolbar) findViewById(R.id.actionbarUserProfile);
         setSupportActionBar(actionbarUserProfile);
-        getSupportActionBar().setTitle("User Profile");
+        getSupportActionBar().setTitle(R.string.userProfileActivityInitSetTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tabLayout = (TabLayout) findViewById(R.id.UserProfileTabLayOut);
@@ -60,8 +60,15 @@ public class UserProfileActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
+            case R.id.reservationHomeOptionMenu:
+                Intent HomeIntent = new Intent(UserProfileActivity.this, HomeActivity.class);
+                startActivity(HomeIntent);
+                return true;
+            case R.id.reservationReservationOptionMenu:
+                    Intent MainIntent = new Intent(UserProfileActivity.this, MainActivity.class);
+                    startActivity(MainIntent);
+                return true;
             case R.id.reservationInfoOptionMenu:
-                Toast.makeText(getApplicationContext(),"Item 1 Selected",Toast.LENGTH_SHORT).show();
                 Intent userProfile = new Intent(UserProfileActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
                 finish();
@@ -74,7 +81,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     startActivity(welcomeIntent);
                     finish();
                 }
-                Toast.makeText(getApplicationContext(),"Your account has been successfully logged out",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),R.string.userProfileActivityonOptionsItemSelected,Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -1,22 +1,23 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="register">Register</string>
-    <string name="account">With Account</string>
+    <string name="login">Login</string>
     <string name="create_new_account">Create New Account</string>
-    <string name="username">Username</string>
+    <string name="username">Username(*)</string>
+    <string name="login_username">Username</string>
+    <string name="user_inf_username">Username</string>
     <string name="e_mail">E-mail</string>
-    <string name="password">Password</string>
+    <string name="password">Password(*)</string>
+    <string name="login_password">Password</string>
     <string name="apply">Apply</string>
-    <string name="todo">TODO</string>
     <string name="firstname">Firstname</string>
     <string name="surname">Surname</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="detaylari">detaylari</string>
+    <string name="see_reservations">Reservations</string>
     <string name="reservation_info">Reservation Info</string>
     <string name="log_out">Log Out</string>
-    <string name="login">Login</string>
     <string name="my_profile">My Profile</string>
+    <string name="my_Home">Home</string>
     <string name="make_a_reservation">Make a reservation</string>
     <string name="user_information">User Information</string>
     <string name="update_user_information">Update User Information</string>
@@ -31,5 +32,28 @@
     <string name="password_edit_user">Password</string>
     <string name="username_edit_user">Username</string>
     <string name="enter_your_new_password">Enter your new password</string>
+    <string name="texttxtHomeWelcome">Welcome</string>
+    <string name="texttxtHomeButton">Button</string>
+
+
+    <string name="userProfileActivityInitSetTitle">User Profile</string>
+    <string name="userProfileActivityonOptionsItemSelected">Your account has been successfully logged out</string>
+    <string name="registerActivityonResponse">Your account has been successfully created</string>
+    <string name="registerActivityonErrorResponse">Please try again</string>
+    <string name="mainActivityInitSetTitle">Parking Reservation</string>
+    <string name="loginActivityInitSetTitle">Login</string>
+    <string name="loginActivityInitTost">Please enter your username and password to login to your account.</string>
+    <string name="loginActivityLoginUserAlertEmptyUsername">Please enter your username and password to login to your account.</string>
+    <string name="loginActivityLoginUserAlertEmptyPassword">Password cannot be empty.</string>
+    <string name="loginActivityLoginUserOnResponseSuscssesLogin">You have successfully logged into your account.</string>
+    <string name="loginActivityLoginUserOnErrorResponse">Incorrect username or password please try again.</string>
+    <string name="homeActivitySetTitle">Parking Reservation</string>
+    <string name="chooseTimeActivitySetTitle">Select Time</string>
+    <string name="changeInformationActivityOnResponse">Your account has been successfully updeted</string>
+
+
+
+
+
 
 </resources>

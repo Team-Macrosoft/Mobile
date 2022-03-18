@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     public void init(){
         actionbarMain = (Toolbar) findViewById(R.id.actionbarMain);
         setSupportActionBar(actionbarMain);
-        getSupportActionBar().setTitle("Parking Reservation");
+        getSupportActionBar().setTitle(R.string.mainActivityInitSetTitle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         tabLayout = (TabLayout) findViewById(R.id.mainTabLayout);
@@ -56,10 +57,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
+            case R.id.reservationHomeOptionMenu:
+                Intent HomeIntent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(HomeIntent);
+                return true;
             case R.id.reservationInfoOptionMenu:
                 Intent userProfile = new Intent(MainActivity.this, UserProfileActivity.class);
                 startActivity(userProfile);
-
                 return true;
             case R.id.optionMenuLogout:
                 manager.clearSharedPreference(getApplicationContext());
@@ -69,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(welcomeIntent);
                    finish();
                 }
-                Toast.makeText(getApplicationContext(),"Your account has been successfully logged out",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),R.string.userProfileActivityonOptionsItemSelected,Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     public void init(){
         actionbarLogin = (Toolbar) findViewById(R.id.actionbarLogin);
         setSupportActionBar(actionbarLogin);
-        getSupportActionBar().setTitle("Login");
+        getSupportActionBar().setTitle(R.string.loginActivityInitSetTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(mainIntent);
             finish();
         }
-        Toast.makeText(LoginActivity.this, "Please enter your username and password to login to your account.", Toast.LENGTH_LONG).show();
+        Toast.makeText(LoginActivity.this, R.string.loginActivityInitTost, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -80,9 +80,9 @@ public class LoginActivity extends AppCompatActivity {
         String password = txtPassword.getText().toString();
 
         if (TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.loginActivityLoginUserAlertEmptyUsername, Toast.LENGTH_LONG).show();
         }else if (TextUtils.isEmpty(password)){
-            Toast.makeText(this, "Password cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.loginActivityLoginUserAlertEmptyPassword, Toast.LENGTH_SHORT).show();
         }else {
             try {
                 RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         manager.setSharedPreference(getApplicationContext(),"Id",loginResponseUserInf.getResponse().getId().toString());
                         try {
                             manager.setSharedPreference(getApplicationContext(),"token",response.getString("token"));
-                            Toast.makeText(LoginActivity.this, "You have successfully logged into your account", Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, R.string.loginActivityLoginUserOnResponseSuscssesLogin, Toast.LENGTH_LONG).show();
                             Intent mainIntent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(mainIntent);
                             finish();
@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(LoginActivity.this, "Incorrect username or password please try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, R.string.loginActivityLoginUserOnErrorResponse, Toast.LENGTH_SHORT).show();
                     }
                 });
 
