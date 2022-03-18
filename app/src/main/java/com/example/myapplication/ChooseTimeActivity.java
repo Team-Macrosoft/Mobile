@@ -142,11 +142,12 @@ public class ChooseTimeActivity extends AppCompatActivity {
         String stringMinute = "0"+String.valueOf(0);
         String stringSecond = "0"+String.valueOf(0);
         String stringYear = String.valueOf(year);
-        String stringMonth = String.valueOf(month);
-        String stringDay = String.valueOf(day);
+        String stringMonth = (month < 10) ? "0"+ month : String.valueOf(month);
+        String stringDay = (day < 10) ? "0"+ day : String.valueOf(day);
 
         String sDate = stringYear+"-"+stringMonth+"-"+stringDay+" "+ stringEndHour+":"
                 +stringMinute+":"+stringSecond;
+
 
 
         Log.i("Time", sDate);

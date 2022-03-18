@@ -5,19 +5,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.myapplication.helper.Constant;
-import com.example.myapplication.model.CreateReservationResponse;
+import com.example.myapplication.model.ReservationResponse;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -27,13 +27,24 @@ import java.util.Map;
 
 public class BillActivity extends AppCompatActivity {
 
-    ListView listBill;
+   TextView txtStartDate;
+   TextView txtEndDate;
+   TextView txtTotalCost;
+
     Button btnGoToHome;
+
     private LocalDataManager manager = LocalDataManager.getInstance();
 
     public void init() {
+        RequestQueue requestQueue = Volley.newRequestQueue(BillActivity.this);
+
         btnGoToHome = findViewById(R.id.btnGoToHome);
-        listBill = findViewById(R.id.listBill);
+
+        txtStartDate = findViewById(R.id.textStartDate);
+        txtEndDate =  findViewById(R.id.textEndDate);
+        txtTotalCost = findViewById(R.id.textTotalCost);
+
+
 
         String rId =  getIntent().getStringExtra("reservationId");
         String url = Constant.url + "/api/reservations/"+rId;
@@ -42,7 +53,24 @@ public class BillActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Gson gson = new Gson();
-                CreateReservationResponse createReservationResponse = gson.fromJson(response.toString(), CreateReservationResponse.class);
+                ReservationResponse reservationResponse = gson.fromJson(response.toString(), ReservationResponse.class);
+
+                String startDateFromArray = reservationResponse.getData().getStartDate()[0]
+                        + "-" + reservationResponse.getData().getStartDate()[1]
+                        + "-" + reservationResponse.getData().getStartDate()[2]
+                        + ":" + reservationResponse.getData().getStartDate()[3]
+                        + ":" + reservationResponse.getData().getStartDate()[4];
+
+                String endDateFromArray = reservationResponse.getData().getEndDate()[0]
+                        + "-" + reservationResponse.getData().getEndDate()[1]
+                        + "-" + reservationResponse.getData().getEndDate()[2]
+                        + ":" + reservationResponse.getData().getEndDate()[3]
+                        + ":" + reservationResponse.getData().getEndDate()[4];
+
+
+                txtStartDate.setText(startDateFromArray);
+                txtEndDate.setText(endDateFromArray);
+                txtTotalCost.setText(String.valueOf(reservationResponse.getData().getTotalPrice()));
 
                 Log.i("VOLLEY", response.toString());
 
@@ -61,12 +89,21 @@ public class BillActivity extends AppCompatActivity {
                 return params;
             }
         };
+        requestQueue.add(jsonObjectRequest);
 
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_bill);
         init();
+
+        btnGoToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent billIntent = new Intent(BillActivity.this,HomeActivity.class);
+                startActivity(billIntent);
+            }
+        });
     }
 }

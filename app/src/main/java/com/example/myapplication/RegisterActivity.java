@@ -82,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         jsonBody.put("password", password);
         jsonBody.put("surName",surname);
         jsonBody.put("firstName",firstname);
-        jsonBody.put("role","ROLE_MEMBER");
+        jsonBody.put("role","ROLE_ADMIN");
 
         JsonObjectRequest regueest = new JsonObjectRequest(Request.Method.POST, URL, jsonBody, new Response.Listener<JSONObject>() {
             @Override

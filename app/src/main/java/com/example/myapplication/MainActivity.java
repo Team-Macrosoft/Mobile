@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         VPAdapter vpAdapter = new VPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         vpAdapter.addFragment(new MakeAReservationFragment(),"Make a Reservation");
-        vpAdapter.addFragment(new BlankFragment2(),"Update Reservation");
+        vpAdapter.addFragment(new UserReservationFragment(),"Update Reservation");
         viewPager.setAdapter(vpAdapter);
 
     }

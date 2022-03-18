@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case R.id.reservationReservationOptionMenu:
-                Intent MainIntent = new Intent(HomeActivity.this, MainActivity.class);
+                Intent MainIntent = new Intent(HomeActivity.this, MyReservationActivity.class);
                 startActivity(MainIntent);
                 return true;
             case R.id.reservationInfoOptionMenu:

@@ -1,9 +1,12 @@
 package com.example.myapplication.model;
 
 
-public class CreateReservationResponse {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MemberReservationListResponse {
     private String message;
-    private Reservation data;
+    private ArrayList<Reservation> data;
     private boolean success;
 
     public String getMessage() {
@@ -14,11 +17,11 @@ public class CreateReservationResponse {
         this.message = message;
     }
 
-    public Reservation getData() {
+    public ArrayList<Reservation> getReservationList() {
         return data;
     }
 
-    public void setData(Reservation data) {
+    public void setReservationList(ArrayList<Reservation> data) {
         this.data = data;
     }
 

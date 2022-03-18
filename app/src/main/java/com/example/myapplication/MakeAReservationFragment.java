@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.myapplication.helper.Constant;
-import com.example.myapplication.model.CreateReservationResponse;
+import com.example.myapplication.model.ReservationResponse;
 import com.example.myapplication.model.ParkingSpot;
 import com.example.myapplication.model.ParkingSlotResponse;
 
@@ -32,7 +32,6 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,27 +60,26 @@ public class MakeAReservationFragment extends Fragment {
 
         try {
 
-            String startTime = getActivity().getIntent().getExtras().getString("StartTime","");
-            String endTime = getActivity().getIntent().getExtras().getString("EndTime","");
+            String startTime = getActivity().getIntent().getExtras().getString("StartTime", "");
+            String endTime = getActivity().getIntent().getExtras().getString("EndTime", "");
 
 
-                Log.i("dateeeeeeee", startTime);
+            Log.i("dateeeeeeee", startTime);
 
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("startDate", startTime);
-            jsonBody.put("endDate",endTime );
+            jsonBody.put("endDate", endTime);
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getAvailableURL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    String token = manager.getSharedPreference(getContext(), "token", "");
                     try {
                         ParkingSlotResponse parkingSlotResponse = ParkingSlotResponse.convertFromJSONToMyClass(response);
                         ArrayList<ParkingSpot> parkingSpotList = parkingSlotResponse.getParkingSlotList();
 
                         for (ParkingSpot parkingSlot : parkingSpotList) {
                             String parkingSpotString = "";
-                            parkingSpotString +=  parkingSlot.getId()+".parking spot " + " : " + "price: " + parkingSlot.getPrice();
+                            parkingSpotString += parkingSlot.getId() + ".parking spot " + " : " + "price: " + parkingSlot.getPrice();
                             parkingSlotStringList.add(parkingSpotString);
                         }
 
@@ -98,16 +96,16 @@ public class MakeAReservationFragment extends Fragment {
 
                                 RequestQueue requestQueue = Volley.newRequestQueue(getContext());
                                 ArrayList<String> reservationStringList = new ArrayList<>();
-                                String idString = ((TextView) view).getText().toString().substring(0,1);
+                                String idString = ((TextView) view).getText().toString().substring(0, 1);
 
-                                System.out.println("xxxxxxxxxxxxxxxxxx:"+  idString);
+                                System.out.println("xxxxxxxxxxxxxxxxxx:" + idString);
 
                                 String getReservationUrl = Constant.url + "/api/reservations/create";
                                 Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
                                 try {
 
                                     JSONObject jsonBody = new JSONObject();
-                                    jsonBody.put("userId", manager.getSharedPreference(getContext(),"Id",""));
+                                    jsonBody.put("userId", manager.getSharedPreference(getContext(), "Id", ""));
                                     jsonBody.put("parkingSpotId", idString);
                                     jsonBody.put("startDate", "2022-03-21 10:00:00");
                                     jsonBody.put("endDate", "2022-03-22 10:00:00");
@@ -116,14 +114,14 @@ public class MakeAReservationFragment extends Fragment {
                                         @Override
                                         public void onResponse(JSONObject response) {
                                             Gson gson = new Gson();
-                                            CreateReservationResponse createReservationResponse = gson.fromJson(response.toString(),CreateReservationResponse.class);
+                                            ReservationResponse reservationResponse = gson.fromJson(response.toString(), ReservationResponse.class);
 
                                             Log.i("VOLLEY", response.toString());
 
-                                                Toast.makeText(getContext(), "You reservation is created", Toast.LENGTH_LONG).show();
-                                                Intent mainIntent = new Intent(getContext(), BillActivity.class);
-                                                mainIntent.putExtra("reservationId", String.valueOf(createReservationResponse.getData().getId()));
-                                                startActivity(mainIntent);
+                                            Toast.makeText(getContext(), "You reservation is created", Toast.LENGTH_LONG).show();
+                                            Intent mainIntent = new Intent(getContext(), BillActivity.class);
+                                            mainIntent.putExtra("reservationId", String.valueOf(reservationResponse.getData().getId()));
+                                            startActivity(mainIntent);
 
                                         }
                                     }, new Response.ErrorListener() {
@@ -134,6 +132,7 @@ public class MakeAReservationFragment extends Fragment {
                                     }) {
                                         @Override
                                         public Map<String, String> getHeaders() throws AuthFailureError {
+                                            String token = manager.getSharedPreference(getContext(), "token", "");
                                             Map<String, String> params = new HashMap<String, String>();
                                             params.put("Authorization", token);
                                             return params;
@@ -175,7 +174,7 @@ public class MakeAReservationFragment extends Fragment {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     String token = manager.getSharedPreference(getContext(), "token", "");
                     HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Authorization",token);
+                    headers.put("Authorization", token);
                     return headers;
                 }
             };
