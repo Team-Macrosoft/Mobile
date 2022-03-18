@@ -65,7 +65,7 @@ public class UserProfileActivity extends AppCompatActivity {
                 startActivity(HomeIntent);
                 return true;
             case R.id.reservationReservationOptionMenu:
-                    Intent MainIntent = new Intent(UserProfileActivity.this, MainActivity.class);
+                    Intent MainIntent = new Intent(UserProfileActivity.this, MyReservationActivity.class);
                     startActivity(MainIntent);
                 return true;
             case R.id.reservationInfoOptionMenu:

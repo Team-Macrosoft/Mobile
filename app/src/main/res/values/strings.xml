@@ -18,7 +18,7 @@
     <string name="log_out">Log Out</string>
     <string name="my_profile">My Profile</string>
     <string name="my_Home">Home</string>
-    <string name="make_a_reservation">Make a reservation</string>
+    <string name="make_a_reservation">New reservation</string>
     <string name="user_information">User Information</string>
     <string name="update_user_information">Update User Information</string>
     <string name="firstnameUserInf">Firstname</string>
@@ -34,13 +34,17 @@
     <string name="enter_your_new_password">Enter your new password</string>
     <string name="texttxtHomeWelcome">Welcome</string>
     <string name="texttxtHomeButton">Button</string>
-
-
     <string name="userProfileActivityInitSetTitle">User Profile</string>
+    <string name="reservationOptionMenu">My Reservations</string>
+    <string name="start_date">Start Date:</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="end_date">End Date:</string>
+    <string name="button_go_home">Return Home</string>
+
     <string name="userProfileActivityonOptionsItemSelected">Your account has been successfully logged out</string>
     <string name="registerActivityonResponse">Your account has been successfully created</string>
     <string name="registerActivityonErrorResponse">Please try again</string>
-    <string name="mainActivityInitSetTitle">Parking Reservation</string>
+    <string name="mainActivityInitSetTitle">Available Parking Spots</string>
     <string name="loginActivityInitSetTitle">Login</string>
     <string name="loginActivityInitTost">Please enter your username and password to login to your account.</string>
     <string name="loginActivityLoginUserAlertEmptyUsername">Please enter your username and password to login to your account.</string>
@@ -50,11 +54,9 @@
     <string name="homeActivitySetTitle">Parking Reservation</string>
     <string name="chooseTimeActivitySetTitle">Select Time</string>
     <string name="changeInformationActivityOnResponse">Your account has been successfully updeted</string>
-    <string name="reservationOptionMenu">Reservations</string>
-    <string name="start_date">Start Date:</string>
-    <string name="total_cost">Total Cost</string>
-    <string name="end_date">End Date:</string>
-    <string name="button_go_home">Return Home</string>
+    <string name="billActivitySetTitle">Bill Detail"</string>
+    <string name="myReservationActivitySetTitle">My Reservation"</string>
+    <string name="btnRefresh">Refresh</string>
 
 
 </resources>

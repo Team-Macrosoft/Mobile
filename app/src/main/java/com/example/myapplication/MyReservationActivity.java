@@ -36,16 +36,31 @@ import java.util.List;
 import java.util.Map;
 
 public class MyReservationActivity extends AppCompatActivity {
-
-
+    Button btnBackToReservation;
+    private Toolbar actionbarMyReservation;
     private LocalDataManager manager = LocalDataManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservation);
         init();
+        btnBackToReservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent billIntent = new Intent(MyReservationActivity.this,ChooseTimeActivity.class);
+                startActivity(billIntent);
+            }
+        });
+
     }
     public void init() {
+        btnBackToReservation = findViewById(R.id.btnBackToReservation);
+
+        actionbarMyReservation = (Toolbar) findViewById(R.id.actionbarMain);
+        setSupportActionBar(actionbarMyReservation);
+        getSupportActionBar().setTitle(R.string.myReservationActivitySetTitle);
+
+
         RequestQueue requestQueue = Volley.newRequestQueue(MyReservationActivity.this);
 
         ArrayList<String> reservationStringList = new ArrayList<>();
@@ -127,5 +142,41 @@ public class MyReservationActivity extends AppCompatActivity {
         };
         requestQueue.add(jsonObjectRequest);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_item,menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.reservationHomeOptionMenu:
+                Intent MainIntent = new Intent(MyReservationActivity.this, HomeActivity.class);
+
+                startActivity(MainIntent);
+                return true;
+            case R.id.reservationInfoOptionMenu:
+                Intent userProfile = new Intent(MyReservationActivity.this, UserProfileActivity.class);
+                startActivity(userProfile);
+                finish();
+                return true;
+            case R.id.optionMenuLogout:
+                manager.clearSharedPreference(getApplicationContext());
+                String token =  manager.getSharedPreference(getApplicationContext(),"token","");
+                if(token==null || token.isEmpty()){
+                    Intent welcomeIntent = new Intent(MyReservationActivity.this, WelcomeActivity.class);
+                    startActivity(welcomeIntent);
+                    finish();
+                }
+                Toast.makeText(getApplicationContext(),R.string.userProfileActivityonOptionsItemSelected,Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

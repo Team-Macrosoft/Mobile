@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,17 +42,20 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+
     private Toolbar actionbarMain;
     private LocalDataManager manager = LocalDataManager.getInstance();
+    private Button btnRefresh;
 
 
-    public void init(){
+    public void init() {
+
+
         actionbarMain = (Toolbar) findViewById(R.id.actionbarMain);
         setSupportActionBar(actionbarMain);
         getSupportActionBar().setTitle(R.string.mainActivityInitSetTitle);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        btnRefresh = findViewById(R.id.btnRefresh);
 
 
         ArrayList<String> parkingSlotStringList = new ArrayList<>();
@@ -64,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
             String startTime = getIntent().getExtras().getString("StartTime", "");
             String endTime = getIntent().getExtras().getString("EndTime", "");
 
-
-            Log.i("dateeeeeeee", startTime);
-
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("startDate", startTime);
             jsonBody.put("endDate", endTime);
@@ -78,81 +80,89 @@ public class MainActivity extends AppCompatActivity {
                         ParkingSlotResponse parkingSlotResponse = ParkingSlotResponse.convertFromJSONToMyClass(response);
                         ArrayList<ParkingSpot> parkingSpotList = parkingSlotResponse.getParkingSlotList();
 
-                        for (ParkingSpot parkingSlot : parkingSpotList) {
-                            String parkingSpotString = "";
-                            parkingSpotString += parkingSlot.getId() + ".parking spot " + " : " + "price: " + parkingSlot.getPrice();
-                            parkingSlotStringList.add(parkingSpotString);
+                        if (parkingSpotList != null && parkingSpotList.size() != 0) {
+                            for (ParkingSpot parkingSlot : parkingSpotList) {
+                                String parkingSpotString = "";
+                                parkingSpotString += parkingSlot.getId() + ".parking spot " + " : " + "price: " + parkingSlot.getPrice();
+                                parkingSlotStringList.add(parkingSpotString);
+                            }
+                            ListView listView = findViewById(R.id.slotList);
+
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this,
+                                    androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, parkingSlotStringList);
+
+                            listView.setAdapter(arrayAdapter);
+
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                                    RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+                                    ArrayList<String> reservationStringList = new ArrayList<>();
+                                    String idString = ((TextView) view).getText().toString().substring(0, 1);
+
+                                    System.out.println("xxxxxxxxxxxxxxxxxx:" + idString);
+
+                                    String getReservationUrl = Constant.url + "/api/reservations/create";
+                                    try {
+
+                                        JSONObject jsonBody = new JSONObject();
+                                        jsonBody.put("userId", manager.getSharedPreference(MainActivity.this, "Id", ""));
+                                        jsonBody.put("parkingSpotId", idString);
+                                        jsonBody.put("startDate", startTime);
+                                        jsonBody.put("endDate", endTime);
+
+                                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getReservationUrl, jsonBody, new Response.Listener<JSONObject>() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                Gson gson = new Gson();
+                                                ReservationResponse reservationResponse = gson.fromJson(response.toString(), ReservationResponse.class);
+
+                                                Log.i("VOLLEY", response.toString());
+
+                                                Toast.makeText(MainActivity.this, "You reservation is created", Toast.LENGTH_LONG).show();
+                                                Intent mainIntent = new Intent(MainActivity.this, BillActivity.class);
+                                                mainIntent.putExtra("reservationId", String.valueOf(reservationResponse.getData().getId()));
+                                                startActivity(mainIntent);
+
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Toast.makeText(MainActivity.this, "This spot is not available, please refresh the page", Toast.LENGTH_LONG).show();
+                                                Log.e("VOLLEYzzzzzzzzzzzzzzzz", error.toString());
+                                            }
+                                        }) {
+                                            @Override
+                                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                                String token = manager.getSharedPreference(MainActivity.this, "token", "");
+                                                Map<String, String> params = new HashMap<String, String>();
+                                                params.put("Authorization", token);
+                                                return params;
+                                            }
+
+                                            @Override
+                                            public String getBodyContentType() {
+                                                return "application/json; charset=utf-8";
+                                            }
+                                        };
+
+                                        requestQueue.add(jsonObjectRequest);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            });
+
+
+                        }else {
+                            Toast.makeText(MainActivity.this, "There is not any available spot. " +
+                                    "Please try another time slot", Toast.LENGTH_LONG).show();
                         }
 
-                        ListView listView = findViewById(R.id.slotList);
-
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this,
-                                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, parkingSlotStringList);
-
-                        listView.setAdapter(arrayAdapter);
-
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                                RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-                                ArrayList<String> reservationStringList = new ArrayList<>();
-                                String idString = ((TextView) view).getText().toString().substring(0, 1);
-
-                                System.out.println("xxxxxxxxxxxxxxxxxx:" + idString);
-
-                                String getReservationUrl = Constant.url + "/api/reservations/create";
-                                Log.i("HelloListView", "You clicked Item: " + id + " at position:" + position);
-                                try {
-
-                                    JSONObject jsonBody = new JSONObject();
-                                    jsonBody.put("userId", manager.getSharedPreference(MainActivity.this, "Id", ""));
-                                    jsonBody.put("parkingSpotId", idString);
-                                    jsonBody.put("startDate", "2022-03-21 10:00:00");
-                                    jsonBody.put("endDate", "2022-03-22 10:00:00");
-
-                                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getReservationUrl, jsonBody, new Response.Listener<JSONObject>() {
-                                        @Override
-                                        public void onResponse(JSONObject response) {
-                                            Gson gson = new Gson();
-                                            ReservationResponse reservationResponse = gson.fromJson(response.toString(), ReservationResponse.class);
-
-                                            Log.i("VOLLEY", response.toString());
-
-                                            Toast.makeText(MainActivity.this, "You reservation is created", Toast.LENGTH_LONG).show();
-                                            Intent mainIntent = new Intent(MainActivity.this, BillActivity.class);
-                                            mainIntent.putExtra("reservationId", String.valueOf(reservationResponse.getData().getId()));
-                                            startActivity(mainIntent);
-
-                                        }
-                                    }, new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            Log.e("VOLLEY", error.toString());
-                                        }
-                                    }) {
-                                        @Override
-                                        public Map<String, String> getHeaders() throws AuthFailureError {
-                                            String token = manager.getSharedPreference(MainActivity.this, "token", "");
-                                            Map<String, String> params = new HashMap<String, String>();
-                                            params.put("Authorization", token);
-                                            return params;
-                                        }
-
-                                        @Override
-                                        public String getBodyContentType() {
-                                            return "application/json; charset=utf-8";
-                                        }
-                                    };
-
-                                    requestQueue.add(jsonObjectRequest);
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        });
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -194,16 +204,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        getAvailableReservations();
+
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(getIntent());
+            }
+        });
+
     }
 
-    private void getAvailableReservations(){
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_item,menu);
+        getMenuInflater().inflate(R.menu.menu_item, menu);
         return true;
     }
 
@@ -211,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.reservationHomeOptionMenu:
                 Intent HomeIntent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(HomeIntent);
@@ -222,16 +237,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.optionMenuLogout:
                 manager.clearSharedPreference(getApplicationContext());
-                String token=  manager.getSharedPreference(getApplicationContext(),"token","");
-                if(token==null || token.isEmpty()){
+                String token = manager.getSharedPreference(getApplicationContext(), "token", "");
+                if (token == null || token.isEmpty()) {
                     Intent welcomeIntent = new Intent(MainActivity.this, WelcomeActivity.class);
                     startActivity(welcomeIntent);
                     finish();
                 }
-                Toast.makeText(getApplicationContext(),R.string.userProfileActivityonOptionsItemSelected,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.userProfileActivityonOptionsItemSelected, Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

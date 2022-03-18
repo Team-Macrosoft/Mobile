@@ -42,7 +42,7 @@ public class BillActivity extends AppCompatActivity {
     public void init() {
         actionbarMain = (Toolbar) findViewById(R.id.actionbarMain);
         setSupportActionBar(actionbarMain);
-        getSupportActionBar().setTitle("Bill Detail");
+        getSupportActionBar().setTitle(R.string.billActivitySetTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 

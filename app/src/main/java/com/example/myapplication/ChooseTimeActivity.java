@@ -91,11 +91,16 @@ public class ChooseTimeActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-                    Intent mainIntent = new Intent(ChooseTimeActivity.this, MainActivity.class);
-                    mainIntent.putExtra("StartTime",getStartTime());
-                    mainIntent.putExtra("EndTime",getEndTime());
-                    startActivity(mainIntent);
-                    finish();
+                    if(Integer.valueOf(getStartTime().substring(11,13)) < Integer.valueOf(getEndTime().substring(11,13))){
+                        Intent mainIntent = new Intent(ChooseTimeActivity.this, MainActivity.class);
+                        mainIntent.putExtra("StartTime",getStartTime());
+                        mainIntent.putExtra("EndTime",getEndTime());
+                        startActivity(mainIntent);
+                        finish();
+                    }else{
+                        Toast.makeText(ChooseTimeActivity.this, "Start time cannot be smaller than end time!", Toast.LENGTH_LONG).show();
+                    }
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

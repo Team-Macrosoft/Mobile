@@ -41,7 +41,7 @@
     <string name="loginActivityLoginUserAlertEmptyUsername">Voer uw gebruikersnaam en wachtwoord in om in te loggen op uw account.</string>
     <string name="loginActivityLoginUserAlertEmptyPassword">Wachtwoord mag niet leeg zijn.</string>
     <string name="loginActivityLoginUserOnResponseSuscssesLogin">U bent succesvol ingelogd op uw account.</string>
-    <string name="mainActivityInitSetTitle">Parking Reservatie</string>
+    <string name="mainActivityInitSetTitle">Beschikbare parkeerplaatsen</string>
     <string name="loginActivityLoginUserOnErrorResponse">Incorrecte gebruikersnaam of wachtwoord. Probeer alstublieft opnieuw</string>
     <string name="homeActivitySetTitle">Parking Reservatie</string>
     <string name="chooseTimeActivitySetTitle">Kies Tijd</string>
@@ -49,5 +49,12 @@
     <string name="login_username">Gebruikersnaam</string>
     <string name="login_password">Wachtwoord</string>
     <string name="user_inf_username">Gebruikersnaam</string>
-    <string name="reservationOptionMenu">Reservaties</string>
+    <string name="reservationOptionMenu">Mijn Reservaties</string>
+    <string name="start_date">Begin datum:</string>
+    <string name="total_cost">Totale Prijs</string>
+    <string name="end_date">Einddatum:</string>
+    <string name="button_go_home">Terug Home</string>
+    <string name="billActivitySetTitle">Factuurdetails</string>
+    <string name="myReservationActivitySetTitle">Mijn Reservatie</string>
+    <string name="btnRefresh">Pagina verversen</string>
 </resources>
