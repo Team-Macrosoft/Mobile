@@ -27,9 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="@+id/datePicker1"
-        app:layout_constraintHorizontal_bias="0.22"
+        app:layout_constraintHorizontal_bias="0.318"
         app:layout_constraintStart_toStartOf="@+id/datePicker1"
         app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
 
@@ -39,11 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="136dp"
+        android:layout_marginStart="52dp"
         app:layout_constraintBottom_toBottomOf="@+id/startNumberPicker"
         app:layout_constraintStart_toEndOf="@+id/startNumberPicker"
         app:layout_constraintTop_toTopOf="@+id/startNumberPicker"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnReserve"
