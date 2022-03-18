@@ -7,6 +7,22 @@
 
     <ListView
         android:id="@+id/myReservationList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="408dp"
+        android:layout_height="224dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.232" />
+
+    <Button
+        android:id="@+id/btnBackToReservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/make_a_reservation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myReservationList"
+        app:layout_constraintVertical_bias="0.492"
+        tools:layout_editor_absoluteX="123dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MyReservationActivity extends AppCompatActivity {
-
+    Button btnBackToReservation;
 
     private LocalDataManager manager = LocalDataManager.getInstance();
     @Override
@@ -40,8 +40,18 @@ public class MyReservationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_reservation);
         init();
+
+        btnBackToReservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent billIntent = new Intent(MyReservationActivity.this,ChooseTimeActivity.class);
+                startActivity(billIntent);
+            }
+        });
     }
     public void init() {
+
+        btnBackToReservation = findViewById(R.id.btnBackToReservation);
         RequestQueue requestQueue = Volley.newRequestQueue(MyReservationActivity.this);
 
         ArrayList<String> reservationStringList = new ArrayList<>();
@@ -104,6 +114,19 @@ public class MyReservationActivity extends AppCompatActivity {
                     ListView listView = (ListView) findViewById(R.id.myReservationList);
                     listView.setAdapter(adapter);
 
+                }else{
+                    Map<String, String> datum = new HashMap<String, String>(2);
+                    datum.put("First Line", "No reservation found");
+                    datum.put("Second Line", "Please return to reservation page");
+                    data.add(datum);
+
+                    SimpleAdapter adapter = new SimpleAdapter(MyReservationActivity.this, data,
+                            android.R.layout.simple_list_item_2,
+                            new String[]{"First Line", "Second Line"},
+                            new int[]{android.R.id.text1, android.R.id.text2});
+
+                    ListView listView = (ListView) findViewById(R.id.myReservationList);
+                    listView.setAdapter(adapter);
                 }
 
             }

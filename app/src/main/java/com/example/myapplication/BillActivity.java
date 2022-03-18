@@ -99,11 +99,11 @@ public class BillActivity extends AppCompatActivity {
         init();
 
         btnGoToHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent billIntent = new Intent(BillActivity.this,HomeActivity.class);
-                startActivity(billIntent);
-            }
-        });
-    }
+        @Override
+        public void onClick(View view) {
+            Intent billIntent = new Intent(BillActivity.this,HomeActivity.class);
+            startActivity(billIntent);
+        }
+    });
+}
 }

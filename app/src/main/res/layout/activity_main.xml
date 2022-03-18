@@ -10,44 +10,12 @@
         android:id="@+id/actionbarMain"
         layout="@layout/actionbar_app" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/mainTabLayout"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:background="@color/green"
-        app:tabTextColor="@color/white"
-        app:tabSelectedTextColor="@color/black"
-        app:tabIndicatorColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actionbarMain">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/make_a_reservation" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/see_reservations" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mainViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/hello_blank_fragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainTabLayout">
-
-
-    </androidx.viewpager.widget.ViewPager>
+    <ListView
+        android:id="@+id/slotList"
+        android:layout_width="413dp"
+        android:layout_height="670dp"
+        android:layout_marginTop="61dp"
+        app:layout_constraintTop_toTopOf="@+id/actionbarMain" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
